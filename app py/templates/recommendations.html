@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <title>Rekomendasi Film</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <style>
+    body {
+      min-height: 100vh;
+      margin: 0;
+      background: linear-gradient(135deg, #232526 0%, #414345 100%);
+      font-family: 'Segoe UI', Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      background: rgba(34,34,34,0.97);
+      border-radius: 18px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+      padding: 40px 30px 32px 30px;
+      max-width: 700px;
+      width: 100%;
+      margin: 40px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    h1 {
+      color: #fff;
+      text-align: center;
+      margin-bottom: 32px;
+      font-size: 2em;
+      letter-spacing: 1px;
+    }
+    .movie-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 24px;
+      width: 100%;
+      margin-bottom: 24px;
+    }
+    .movie-card {
+      background: #181818;
+      color: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 320px;
+      padding-bottom: 10px;
+    }
+    .poster-wrapper {
+      width: 100%;
+      background: #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 220px;
+    }
+    .movie-card img {
+      width: 100%;
+      max-width: 120px;
+      border-radius: 8px;
+      margin: 18px 0 10px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
+    }
+    .movie-info {
+      padding: 10px 15px 10px 15px;
+      width: 100%;
+      text-align: center;
+    }
+    .genre {
+      color: #ffd700;
+      font-size: 0.95em;
+      margin-bottom: 8px;
+    }
+    .why-recommended {
+      font-style: italic;
+      color: #ccc;
+      font-size: 0.93em;
+      margin-top: 6px;
+    }
+    .no-movie-msg {
+      color: #fff;
+      text-align: center;
+      margin: 40px 0 0 0;
+      font-size: 1.2em;
+      opacity: 0.8;
+      width: 100%;
+    }
+    .back-btn {
+      display: inline-block;
+      margin-top: 18px;
+      color: #fff;
+      background: #5cb85c;
+      padding: 10px 22px;
+      border-radius: 5px;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.2s;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+      text-align: center;
+    }
+    .back-btn:hover {
+      background: #449d44;
+      color: #fff;
+    }
+    @media (max-width: 700px) {
+      .container { padding: 18px 4vw 30px 4vw; }
+      .movie-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<div class="movie-grid">
+  {% for movie in movies %}
+  <div class="movie-card">
+    <div class="movie-info">
+      <h3>{{ movie.title }}</h3>
+      <p class="genre"><strong>Genre:</strong> {{ movie.genres }}</p>
+      <p><strong>Tahun:</strong> {{ movie.release_date[:4] }}</p>
+      {% if movie.why_recommended %}
+      <p class="why-recommended">{{ movie.why_recommended }}</p>
+      {% endif %}
+    </div>
+  </div>
+  {% endfor %}
+  {% if movies|length == 0 %}
+  <div class="no-movie-msg">
+    <p>Tidak ada rekomendasi film.</p>
+  </div>
+  {% endif %}
+</div>
+</body>
+</html>
